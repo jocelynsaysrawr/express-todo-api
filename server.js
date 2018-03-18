@@ -25,6 +25,14 @@ app.post("/buzzword", (req, res) => {
   }
 });
 
+app.post("/reset", (req, res) => {
+  buzzwords.splice(0, buzzwords.length);
+  score = 0;
+  res.json({ success: true });
+  console.log("buzzwords: ", buzzwords);
+  console.log("score: ", score);
+});
+
 app.use((req, res, next) => {
   if (buzzwords.length === 0) {
     res.json({ success: false });
