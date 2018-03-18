@@ -35,10 +35,7 @@ app.use((req, res, next) => {
 });
 
 app.put("/buzzword", (req, res) => {
-  const word = buzzwords.filter(obj => {
-    console.log("obj: ", obj.buzzWord);
-    console.log("body word: ", req.body.buzzWord);
-    console.log("heard: ", req.body.heard);
+  buzzwords.filter(obj => {
     if (obj.buzzWord === req.body.buzzWord && req.body.heard === "true") {
       obj.heard = true;
       score = Number(score) + Number(obj.points);
@@ -50,7 +47,16 @@ app.put("/buzzword", (req, res) => {
   });
 });
 
-app.delete("/buzzword", (req, res) => {});
+app.delete("/buzzword", (req, res) => {
+  buzzwords.forEach((obj, i) => {
+    if (obj.buzzWord === req.body.buzzWord) {
+      buzzwords.splice(i, 1);
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
